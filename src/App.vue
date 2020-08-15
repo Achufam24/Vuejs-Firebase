@@ -1,28 +1,42 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <div id="app" class="container">
+    <nav>
+      <ul>
+        <li><router-link to="/">VueFirebase</router-link></li>
+      </ul>
+      <ul>
+        <li v-if="!addpost"><router-link to="/addpost">New Post</router-link></li>
+      </ul>
+    </nav>
+
+   <router-view></router-view>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  export default {
+    name: "App",
+    data(){
+      return {
+        addpost: false
+      }
+    },
+    watch: {
+      "$route": {
+        handler: function(to){
+          if(to.path === "/addpost"){
+           //console.log(to)
+            this.addpost = true;
+          }else{
+            this.addpost = false;
+          }
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+        },
+       immediate: true
+      }
+    }
   }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+</script>
